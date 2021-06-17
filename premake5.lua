@@ -1,6 +1,7 @@
 project "GLFW"
     kind "StaticLib"
     language "C"
+    staticruntime "on"
 
     targetdir("out/"..outputDir .. "/%{prj.name}")
     objdir("out/build/"..outputDir .. "/%{prj.name}")
@@ -19,7 +20,6 @@ project "GLFW"
 
     filter "system:macosx"
         systemversion "latest"
-        staticruntime "On"
 
         files {
             "src/cocoa_platform.h",
@@ -41,7 +41,6 @@ project "GLFW"
 
     filter "system:windows"
         systemversion "latest"
-        staticruntime "On"
 
         files {
             "src/win32_init.c",
@@ -60,10 +59,9 @@ project "GLFW"
 			"_CRT_SECURE_NO_WARNINGS"
 		}
     filter "system:linux"
-		pic "On"
+		pic "on"
 
 		systemversion "latest"
-		staticruntime "On"
 
 		files {
 			"src/x11_init.c",
