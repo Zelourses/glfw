@@ -1,25 +1,31 @@
 project "GLFW"
     kind "StaticLib"
     language "C"
-    staticruntime "on"
+    staticruntime "off"
 
     targetdir("out/"..outputDir .. "/%{prj.name}")
     objdir("out/build/"..outputDir .. "/%{prj.name}")
 
     files {
         "include/GLFW/glfw3.h",
-        "include/GLFW/glfw3native.h",
-        "src/glfw_config.h",
-        "src/context.c",
+		"include/GLFW/glfw3native.h",
+		"src/glfw_config.h",
+		"src/context.c",
 		"src/init.c",
 		"src/input.c",
 		"src/monitor.c",
+
+		"src/null_init.c",
+		"src/null_joystick.c",
+		"src/null_monitor.c",
+		"src/null_window.c",
+
+		"src/platform.c",
 		"src/vulkan.c",
-		"src/window.c"
+		"src/window.c",
     }
 
     filter "system:macosx"
-        systemversion "latest"
 
         files {
             "src/cocoa_platform.h",
@@ -45,6 +51,7 @@ project "GLFW"
         files {
             "src/win32_init.c",
 			"src/win32_joystick.c",
+			"src/win32_module.c",
 			"src/win32_monitor.c",
 			"src/win32_time.c",
 			"src/win32_thread.c",
@@ -58,10 +65,12 @@ project "GLFW"
 			"_GLFW_WIN32",
 			"_CRT_SECURE_NO_WARNINGS"
 		}
+
+        links {
+			"Dwmapi.lib"
+		}
     filter "system:linux"
 		pic "on"
-
-		systemversion "latest"
 
 		files {
 			"src/x11_init.c",
